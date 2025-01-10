@@ -1,5 +1,5 @@
 import * as esbuild from 'esbuild';
-import lygiaPlugin from '../src/plugin.mjs';
+import lygiaPlugin from 'esbuild-lygia-plugin';
 
 const ctx = await esbuild.context({
   entryPoints: ['src/index.js'],
