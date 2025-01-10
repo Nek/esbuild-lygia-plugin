@@ -1,6 +1,6 @@
 {
   "name": "esbuild-lygia-plugin",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "ESBuild plugin for Lygia shader library",
   "type": "module",
   "main": "./src/plugin.mjs",
@@ -29,5 +29,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "esbuild-lygia-plugin": "^0.0.1"
   }
 }
