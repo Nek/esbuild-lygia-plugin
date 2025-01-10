@@ -28,13 +28,6 @@ async function getCachedFile(url) {
   }
 }
 
-async function getLocalFile(filepath) {
-  try {
-    return await fs.readFile(filepath, 'utf8');
-  } catch (err) {
-    throw new Error(`Failed to read local file ${filepath}: ${err.message}`);
-  }
-}
 
 async function resolveLygia(source, filePath, visited = new Set()) {
   await ensureCacheDir();
@@ -59,8 +52,9 @@ async function resolveLygia(source, filePath, visited = new Set()) {
           return await resolveLygia(content, include_url, new Set(visited));
         } else {
           // Resolve local path relative to the current shader file
+          // For local files, resolve path and read directly
           const localPath = path.resolve(path.dirname(filePath), includePath);
-          const content = await getLocalFile(localPath);
+          const content = await fs.readFile(localPath, 'utf8');
           // Recursively resolve any includes in the local file
           return await resolveLygia(content, localPath, new Set(visited));
         }
