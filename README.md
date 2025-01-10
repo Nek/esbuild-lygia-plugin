@@ -1,13 +1,13 @@
 # lygia-loader
 
-A build-time resolver for the [Lygia](https://lygia.xyz/) shader library that handles GLSL includes. Supports both esbuild and webpack.
+A build-time resolver for the [Lygia](https://lygia.xyz/) shader library that handles GLSL includes for esbuild.
 
 ## Features
 
 - Resolves Lygia includes at build time
 - Caches downloaded files locally
 - Supports local file includes with recursive resolution
-- Works with esbuild and webpack-based bundlers
+- Built for esbuild
 - Live reload support for development
 
 ## Installation
@@ -16,7 +16,7 @@ A build-time resolver for the [Lygia](https://lygia.xyz/) shader library that ha
 npm install lygia-loader
 ```
 
-## Usage with esbuild
+## Usage
 
 Add to your esbuild configuration:
 
@@ -41,27 +41,6 @@ export default {
     lygiaPlugin(),
     liveReload(['src/**/*', 'shaders/**/*'])
   ]
-}
-```
-
-## Usage with webpack
-
-Add to your webpack configuration:
-
-```javascript
-module.exports = {
-  module: {
-    rules: [
-      {
-        test: /\.(glsl|vs|fs|vert|frag)$/,
-        exclude: /node_modules/,
-        use: [
-          'raw-loader',
-          'lygia-loader'
-        ]
-      }
-    ]
-  }
 }
 ```
 
