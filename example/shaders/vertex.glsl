@@ -1,6 +1,7 @@
 out vec2 vUv;
 
 void main() {
-    vUv = uv;
-    gl_Position = vec4(position, 1.0);
+    float scale = 0.5;
+    vUv = scale * uv;
+    gl_Position = vec4(scale * position, 1.0);
 }

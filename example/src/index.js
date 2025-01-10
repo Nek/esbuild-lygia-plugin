@@ -30,11 +30,6 @@ function animate() {
 }
 animate();
 
-// Handle hot reloading
-if (import.meta.hot) {
-  import.meta.hot.accept();
-}
-
 // Cleanup on window unload
 window.addEventListener('unload', () => {
   geometry.dispose();

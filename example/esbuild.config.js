@@ -4,7 +4,7 @@ import lygiaPlugin from '../src/plugin.mjs';
 const ctx = await esbuild.context({
   entryPoints: ['src/index.js'],
   bundle: true,
-  outfile: 'dist/bundle.js',
+  outdir: 'www',
   plugins: [lygiaPlugin()],
   loader: {
     '.glsl': 'text',
@@ -18,7 +18,7 @@ const args = process.argv.slice(2);
 if (args.includes('--dev')) {
   // Dev mode with server
   await ctx.serve({
-    servedir: '.',
+    servedir: 'www',
     port: 8000,
   });
   await ctx.watch();
