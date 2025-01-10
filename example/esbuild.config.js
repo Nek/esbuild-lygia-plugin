@@ -11,6 +11,7 @@ const ctx = await esbuild.context({
   },
   sourcemap: true,
   logLevel: 'info',
+  format: 'esm',
 });
 
 const args = process.argv.slice(2);
