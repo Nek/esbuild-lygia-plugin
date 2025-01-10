@@ -36,9 +36,14 @@ async function getLocalFile(filepath) {
   }
 }
 
-async function resolveLygia(source, filePath) {
+async function resolveLygia(source, filePath, visited = new Set()) {
   await ensureCacheDir();
   
+  if (visited.has(filePath)) {
+    throw new Error(`Circular dependency detected: ${filePath}`);
+  }
+  visited.add(filePath);
+
   const lines = source.split(/\r?\n/);
   const resolvedLines = await Promise.all(
     lines.map(async (line) => {
@@ -49,11 +54,15 @@ async function resolveLygia(source, filePath) {
         if (includePath.startsWith('lygia')) {
           const include_url = 'https://lygia.xyz' + 
             includePath.substring(5);
-          return await getCachedFile(include_url);
+          const content = await getCachedFile(include_url);
+          // Recursively resolve any includes in the lygia file
+          return await resolveLygia(content, include_url, new Set(visited));
         } else {
           // Resolve local path relative to the current shader file
           const localPath = path.resolve(path.dirname(filePath), includePath);
-          return await getLocalFile(localPath);
+          const content = await getLocalFile(localPath);
+          // Recursively resolve any includes in the local file
+          return await resolveLygia(content, localPath, new Set(visited));
         }
       }
       return line;
