@@ -9,6 +9,8 @@ const ctx = await esbuild.context({
   loader: {
     '.glsl': 'text',
   },
+  sourcemap: true,
+  logLevel: 'info',
 });
 
 const args = process.argv.slice(2);
